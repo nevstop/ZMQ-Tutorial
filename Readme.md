@@ -1,5 +1,10 @@
 ## ZMQ 简介
 
+ - ZeroMQ: http://www.zeromq.org
+ - ZeroMQ API: http://api.zeromq.org/
+ - ZGuide: http://zguide.zeromq.org/
+ - ZGuide Example: https://github.com/booksbyus/zguide
+
 ZMQ（ØMQ、ZeroMQ, 0MQ）
  - 看起来像是一套嵌入式的网络链接库，但工作起来更像是一个并发式的框架。
  - 提供的套接字可以在多种协议中传输消息，如线程间、进程间、TCP、广播等。
