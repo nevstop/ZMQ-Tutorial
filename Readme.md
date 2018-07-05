@@ -30,7 +30,7 @@
  - DEALER - DEALER
  - ROUTER - ROUTER
  - PUSH - PULL
- - PAIR - PAIRt
+ - PAIR - PAIR
 
 --------------------------------------
 
