@@ -101,6 +101,34 @@
     
                Figure # - Parallel Pipeline
 
+## Pair Example
+
+ - 演示排他对接模式(Pair)
+ - 双工通讯
+ - socket 不保存任何状态，可以不用考虑发出的消息是否被读取
+ - 一对一的连接
+ - Server 侦听端口，Client 连接上。
+
+ 例子中 Client 每次发送两个消息，Server 只读取一个，Server 收到的消息会被缓存在队列中，下一次读取。
+
+          +------------+
+          |   Server   |
+          +------------+
+          |    PAIR    |
+          \---+--------/
+              ^    ^
+              |    |
+         "info"  "info"
+              |    |
+              v    v
+          /--------+---\
+          |    PAIR    |
+          +------------+
+          |   Client   |
+          +------------+       
+          
+       Figure # - PAIR-PAIR
+
 
 ---------------
 
