@@ -95,6 +95,27 @@ TCP套接字和ZMQ套接字之间的区别：
 
 ## ZMQ Poller
 
+
+## ZMQ v2.2 to ZMQ v3.2+
+
+### 兼容性升级(Compatible Changes)
+
+ 1. PUB-SUB 消息过滤从 subscriber 端修改为为 Publisher 端。在很多的 PUB-SUB 用例中能显著的改善效率。不同版本的 publisher 和 subscriber 能够混用。
+ 2. ZMQ v3.2 增加了很多新的API. 例如：
+    - zmq_disconnect()
+    - zmq_unbind()
+    - zmq_monitor()
+    - zmq_ctx_set(), etc.
+
+### 非兼容升级(Incompatible Changes)
+
+ 1. send/recv 方法的修改。zmq_send()/zmq_recv() 修改为zmq_msg_send()/zmq_msg_recv()。旧的代码会编译失败。
+ 2. 有函数在成功时有>0 的返回值，失败时返回 -1。ZMQ v2.x 成功时始终返回0。需要修改代码，严格的检查 -1 或 <0 表示失败。
+ 3. zmq_poll() 等待的时间单位从us修改为ms。
+ 4. ZMQ_NOBLOCK 修改为 ZMQ_DONTWAIT。旧的代码会编译失败。
+ 5. ZMQ_HWM设置分割为 ZMQ_SNDHWM 和 ZMQ_RCVHWM 两个设置。旧的代码会编译失败。
+ 6. 多数 zmq_getsockopt() 返回值都被修改为整数，可能会发生一些运行时错误。
+ 7. ZMQ_SWAP 被移除。旧的代码会编译失败，这种模式将不被支持。
  
  
 
