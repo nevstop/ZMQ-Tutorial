@@ -39,12 +39,12 @@ TCP套接字和ZMQ套接字之间的区别：
  - [Pattern](./COMPONENTS/Patterns.md)
  - [API](./COMPONENTS/API.md)
 
-## ZMQ v2.2 to ZMQ v3.2+
+## ZMQ v2.x to ZMQ v3.x
 
 ### 兼容性升级(Compatible Changes)
 
  1. PUB-SUB 消息过滤从 subscriber 端修改为为 Publisher 端。在很多的 PUB-SUB 用例中能显著的改善效率。不同版本的 publisher 和 subscriber 能够混用。
- 2. ZMQ v3.2 增加了很多新的API. 例如：
+ 2. ZMQ v3.x 增加了很多新的API. 例如：
     - zmq_disconnect()
     - zmq_unbind()
     - zmq_monitor()
@@ -59,7 +59,10 @@ TCP套接字和ZMQ套接字之间的区别：
  5. ZMQ_HWM设置分割为 ZMQ_SNDHWM 和 ZMQ_RCVHWM 两个设置。旧的代码会编译失败。
  6. 多数 zmq_getsockopt() 返回值都被修改为整数，可能会发生一些运行时错误。
  7. ZMQ_SWAP 被移除。旧的代码会编译失败，这种模式将不被支持。
- 
+
+## ZMQ v3.x to ZMQ v4.x
+
+ 1. INPROC协议，在4.x之前，需要首先bind，然后才能connect，否则会有运行时错误。在4.x之后，没有了这个限制，可以像 TCP一样使用。
  
 
  
