@@ -244,6 +244,18 @@ ZMQ provides proxies to create fanout and fan-in topologies. A proxy connects a 
  - zmq_proxy - start built-in ZMQ proxy     
  - zmq_proxy_steerable - built-in ZMQ proxy with control flow 
 
+        **Shared queue**
+
+        When the frontend is a ZMQ_ROUTER socket, and the backend is a ZMQ_DEALER socket, the proxy shall act as a shared queue that collects requests from a set of clients, and distributes these fairly among a set of services. Requests shall be fair-queued from frontend connections and distributed evenly across backend connections. Replies shall automatically return to the client that made the original request.
+
+        **Forwarder**
+
+        When the frontend is a ZMQ_XSUB socket, and the backend is a ZMQ_XPUB socket, the proxy shall act as a message forwarder that collects messages from a set of publishers and forwards these to a set of subscribers. This may be used to bridge networks transports, e.g. read on tcp:// and forward on pgm://.
+
+        **Streamer**
+
+        When the frontend is a ZMQ_PULL socket, and the backend is a ZMQ_PUSH socket, the proxy shall collect tasks from a set of clients and forwards these to a set of workers using the pipeline pattern.
+
 ## Security
 
 A ZMQ socket can select a security mechanism. Both peers must use the same security mechanism.  
@@ -255,6 +267,7 @@ The following security mechanisms are provided for IPC and TCP connections.
 
         - zmq_curve_keypair - generate a new CURVE keypair
         - zmq_curve_public - derive the public key from a private key
+        
  - zmq_gssapi - secure authentication and confidentiality 
 
 Converting keys to/from armoured text strings  
