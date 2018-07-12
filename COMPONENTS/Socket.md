@@ -1,6 +1,6 @@
 # ZMQ Socket Supported Protocols
 
- - 单播传输协议（tcp, udp, ipc, inporc)
+ - 单播传输协议（tcp, udp, ipc, inporc，vmic)
  - 广播协议（udp, epgm, pgm)
 
 ## TCP协议
@@ -51,25 +51,28 @@
     - inproc 只能用于同一个context 下创建的sockets 间的通讯，这就意味着只能在同一个进程的不同线程之间进行消息传输
     - 在 v4.x 之前，必须先绑定到端点，它才能建立连接。通常的做法是先启动服务端线程，绑定至端点，后启动客户端线程，连接至端点。在 v4.x 之后，没有启动次序的要求。
 
-### pgm
- - zmq_pgm - ZMQ reliable multicast transport using PGM
+### 实际通用组播协议(pgm/epgm) 
 
-        PGM (Pragmatic General Multicast) is a protocol for reliable multicast transport of data over IP networks.
+ - 协议：PGM (Pragmatic General Multicast)
+    -PGM (Pragmatic General Multicast) 
+    -ePGM (Encapsulated PGM)
 
-        ØMQ implements two variants of PGM, the standard protocol where PGM datagrams are layered directly on top of IP datagrams as defined by RFC 3208 (the pgm transport) and "Encapsulated PGM" or EPGM where PGM datagrams are encapsulated inside UDP datagrams (the epgm transport).
+ - 组播协议: 
 
-        The pgm and epgm transports can only be used with the ZMQ_PUB and ZMQ_SUB socket types.
+    - ZMQ 实现了两种 PGM协议, 标准的 PGM 和 ePGM。  
+    ZMQ implements two variants of PGM, the standard protocol where PGM datagrams are layered directly on top of IP datagrams as defined by RFC 3208 (the pgm transport) and "Encapsulated PGM" or EPGM where PGM datagrams are encapsulated inside UDP datagrams (the epgm transport).
+    - PGM (Pragmatic General Multicast)是基于IP网络的可靠组播协议。
+    - PGM/epgm 只能用于 ZMQ_PUB 和 ZMQ_SU B这两种 socket 类型。
+    - PGM sockets 默认情况下速度是受限的。ZMQ_RATE 和 ZMQ_RECOVERY_IVL 与之相关。
+    - PGM 实现需要访问 raw socket，因此在一些操作系统中，需要额外的权限。如果程序不需要直接和其他 PGM 应用进行相互交互，ePGM 是被推荐的选择，因为它不需要额外的特殊权限。
 
-        Further, PGM sockets are rate limited by default. For details, refer to the ZMQ_RATE, and ZMQ_RECOVERY_IVL options documented in zmq_setsockopt(3).
+### 虚拟机通信接口(VMCI)
 
-        The pgm transport implementation requires access to raw IP sockets. Additional privileges may be required on some operating systems for this operation. Applications not requiring direct interoperability with other PGM implementations are encouraged to use the epgm transport instead which does not require any special privileges.
+ - 协议：VMCI (virtual machine communicatios interfacet)
 
-### epgm
+- 单播传输协议
 
-### zmq_vmci - ZMQ transport over virtual machine communicatios interface (VMCI) sockets
+- 特点：
+    - VMCI 传输支持在 vmware 虚拟机和宿主机之间、同一个宿主机上的虚拟机之间的消息通讯。(进程间通讯，类似于 IPC)
 
-        The VMCI transport passes messages between VMware virtual machines running on the same host, between virtual machine and the host and within virtual machines (inter-process transport like ipc).
-
-        Communication between a virtual machine and the host is not supported on Mac OS X 10.9 and above.
-
-
+    - Mac OS X 10.9 及以上，不支持VMCI.
