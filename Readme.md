@@ -37,18 +37,13 @@ TCP套接字和ZMQ套接字之间的区别：
  - [Socket](./COMPONENTS/Socket.md)
  - [Message](./COMPONENTS/Message.md)
  - [Pattern](./COMPONENTS/Patterns.md)
- - [API](./COMPONENTS/API.md)
+ - [API](./COMPONENTS/API.md) : 以 C API 为例，说明 ZMQ 的 API 分类和功能。
 
 ## ZMQ v2.x to ZMQ v3.x
 
 ### 兼容性升级(Compatible Changes)
 
  1. PUB-SUB 消息过滤从 subscriber 端修改为为 Publisher 端。在很多的 PUB-SUB 用例中能显著的改善效率。不同版本的 publisher 和 subscriber 能够混用。
- 2. ZMQ v3.x 增加了很多新的API. 例如：
-    - zmq_disconnect()
-    - zmq_unbind()
-    - zmq_monitor()
-    - zmq_ctx_set(), etc.
 
 ### 非兼容升级(Incompatible Changes)
 

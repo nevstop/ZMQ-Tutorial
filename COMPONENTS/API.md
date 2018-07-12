@@ -1,5 +1,7 @@
 # ZMQ API
 
+[!TOC]
+
 **网页参考**：[ZMQ 4.x API Webpage](http://api.zeromq.org/)
 
 The ZMQ lightweight messaging kernel is a library which extends the standard socket interfaces with features traditionally provided by specialised messaging middleware products. ZMQ sockets provide an abstraction of asynchronous message queues, multiple messaging patterns, message filtering (subscriptions), seamless access to multiple transport protocols and more.
@@ -8,28 +10,27 @@ This documentation presents an overview of ZMQ concepts, describes how ZMQ abstr
 
 ## Context
 
-The ZMQ context keeps the list of sockets and manages the async I/O thread and internal queries.
-
-Before using any ZMQ library functions you must create a ZMQ context. When you exit your application you must destroy the context. These functions let you work with contexts:
+ZMQ Context 用于保存和管理sockets、异步I/O 线程、内部队列。   
+使用 zmq 功能第一步就是创建 zmq context。在退出程序时，要销毁创建的 context。  
 
 ### Create a new ZMQ context
-- zmq_ctx_new - create new ZMQ context 
-- [deprecated]zmq_init - initialise ZMQ context  
+- **zmq_ctx_new** - 创建 zmq context 
+- ~~[deprecated]**zmq_init** - 初始化 zmq context~~  
 
 ### Work with context properties
-- zmq_ctx_set - set context options  
-- zmq_ctx_get - get context options  
+- **zmq_ctx_set** - 设置 Context 属性  
+- **zmq_ctx_get** - 获取 Context 属性  
 
-        - ZMQ_IO_THREADS: Get number of I/O threads
-        - ZMQ_MAX_SOCKETS: Get maximum number of sockets
-        - ZMQ_MAX_MSGSZ: Get maximum message size(Default value is INT_MAX)
-        - ZMQ_SOCKET_LIMIT: Get largest configurable number of sockets
+        - ZMQ_IO_THREADS: number of I/O threads
+        - ZMQ_MAX_SOCKETS: maximum number of sockets
+        - ZMQ_MAX_MSGSZ: maximum message size(Default value is INT_MAX)
+        - ZMQ_SOCKET_LIMIT: largest configurable number of sockets
         - ZMQ_IPV6: Set IPv6 option
-        - ZMQ_BLOCKY: Get blocky setting
-        - ZMQ_MSG_T_SIZE: Get the zmq_msg_t size at runtime
+        - ZMQ_BLOCKY: blocky setting
+        - ZMQ_MSG_T_SIZE: the zmq_msg_t size at runtime
 
 ### Destroy a ZMQ context
-- zmq_ctx_shutdown - shutdown a ZMQ context  
+- **zmq_ctx_shutdown** - 关闭 ZMQ context  
 
         The zmq_ctx_shutdown() function shall shutdown the ZMQ context context.
 
@@ -37,9 +38,9 @@ Before using any ZMQ library functions you must create a ZMQ context. When you e
 
         This function is optional, client code is still required to call the zmq_ctx_term(3) function to free all resources allocated by zeromq.
 
-- zmq_ctx_term - terminate a ZMQ context  
-- [deprecated]zmq_term - terminate ZMQ context  
-- [deprecated]zmq_ctx_destroy - terminate a ZMQ context 
+- **zmq_ctx_term** - 停止 ZMQ context  
+- ~~[deprecated]**zmq_term** - 停止 ZMQ context ~~ 
+- ~~[deprecated]**zmq_ctx_destroy** - 释放 a ZMQ context~~ 
 
         The zmq_ctx_term() function shall destroy the ZMQ context context.
 
@@ -53,25 +54,25 @@ Before using any ZMQ library functions you must create a ZMQ context. When you e
 
 ## Messages
 
-A ZMQ message is a discrete unit of data passed between applications or components of the same application. ZMQ messages have no internal structure and from the point of view of ZMQ itself they are considered to be opaque binary data.
+ZMQ message 是用于在程序、模块间传递的数据单元。ZMQ message 并没有一个标准的结构定义，从 ZMQ 本身而言，ZMQ message 是未知的二进制数据单元块。 
 
-Never access zmq_msg_t members directly, instead always use the zmq_msg family of functions.
+不要直接访问 ZMQ message 的内存数据，使用ZMQ 提供的 API 进行访问。
 
 ### Initialise a message
- - zmq_msg_init_data - initialise ZMQ message from a supplied buffer  
- - zmq_msg_init_size - initialise ZMQ message of a specified size  
- - zmq_msg_init - initialise empty ZMQ message  
+ - **zmq_msg_init_data** - initialise ZMQ message from a supplied buffer  
+ - **zmq_msg_init_size** - initialise ZMQ message of a specified size  
+ - **zmq_msg_init** - initialise empty ZMQ message  
 
 ### Release a message
- - zmq_msg_close - release ZMQ message
+ - **zmq_msg_close** - release ZMQ message
 
 ### Sending and receiving a message
- - zmq_msg_send - send a message part on a socket  
- - zmq_msg_recv - receive a message part from a socket 
- - [deprecated]zmq_recvmsg - receive a message part from a socket  
- - [deprecated]zmq_sendmsg - send a message part on a socket
- - zmq_recv - receive a message part from a socket  
- - zmq_send - send a message part on a socket   
+ - **zmq_msg_send** - send a message part on a socket  
+ - **zmq_msg_recv** - receive a message part from a socket 
+ - ~~[deprecated]**zmq_recvmsg** - receive a message part from a socket~~  
+ - ~~[deprecated]**zmq_sendmsg** - send a message part on a socket~~
+ - **zmq_recv** - receive a message part from a socket  
+ - **zmq_send** - send a message part on a socket   
  
         ZMQ_DONTWAIT
         For socket types (DEALER, PUSH) that block when there are no available peers (or all peers have full high-water mark), specifies that the operation should be performed in non-blocking mode. If the message cannot be queued on the socket, the zmq_msg_send() function shall fail with errno set to EAGAIN.
@@ -79,43 +80,43 @@ Never access zmq_msg_t members directly, instead always use the zmq_msg family o
         Specifies that the message being sent is a multi-part message, and that further message parts are to follow. Refer to the section regarding multi-part messages below for a detailed description.
 
 ### Access message content
- - zmq_msg_data - retrieve pointer to message content  
- - zmq_msg_size - retrieve message content size in bytes  
- - zmq_msg_more - indicate if there are more message parts to receive  
+ - **zmq_msg_data** - retrieve pointer to message content  
+ - **zmq_msg_size** - retrieve message content size in bytes  
+ - **zmq_msg_more** - indicate if there are more message parts to receive  
 
 ### Work with message properties
- - zmq_msg_set - set message property  
- - zmq_msg_gets - get message metadata property  
- - zmq_msg_get - get message property 
+ - **zmq_msg_set** - set message property  
+ - **zmq_msg_gets** - get message metadata property  
+ - **zmq_msg_get** - get message property 
 
 ### Message manipulation
- - zmq_msg_copy - copy content of a message to another message
- - zmq_msg_move - move content of a message to another message 
+ - **zmq_msg_copy** - copy content of a message to another message
+ - **zmq_msg_move** - move content of a message to another message 
 
 ### Routing ID
- - zmq_msg_routing_id - return routing ID for message, if any  
- - zmq_msg_set_routing_id - set routing ID property on message 
+ - **zmq_msg_routing_id** - return routing ID for message, if any  
+ - **zmq_msg_set_routing_id** - set routing ID property on message 
 
 ## Sockets
 
-ZMQ sockets present an abstraction of a asynchronous message queue, with the exact queueing semantics depending on the socket type in use. See zmq_socket(3) for the socket types provided.
+ZMQ socket 是 zmq 对抽象的异步消息队列的抽象表示，具体表现的队列行为，由生成的 zmq Socket 类型决定。
 
 ### Creating a socket
- - zmq_socket - create ZMQ socket
+ - **zmq_socket** - 创建 ZMQ socket
 
 ### Closing a socket
- - zmq_close - close ZMQ socket  
+ - **zmq_close** - 关闭 ZMQ socket  
 
 ### Establishing a message flow
- - zmq_bind - accept incoming connections on a socket
+ - **zmq_bind** - 接受外部 socket 连接(server Part)  
         The zmq_bind() function binds the socket to a local endpoint and then accepts incoming connections on that endpoint.
 
- - zmq_unbind - Stop accepting connections on a socket
+ - **zmq_unbind** - 停止接收外部 socket 连接(server Part) 
 
- - zmq_connect - create outgoing connection from socket 
+ - **zmq_connect** - 创建 Socket 连接(Client)
         The zmq_connect() function connects the socket to an endpoint and then accepts incoming connections on that endpoint
 
- - zmq_disconnect - Disconnect a socket
+ - **zmq_disconnect** - 断开 Socket 连接(Client)
 
         The zmq_disconnect() function shall disconnect a socket specified by the socket argument from the endpoint specified by the endpoint argument. Any outstanding messages physically received from the network but not yet received by the application with zmq_recv() shall be discarded. The behaviour for discarding messages sent by the application with zmq_send() but not yet physically transferred to the network depends on the value of the ZMQ_LINGER socket option for the specified socket.
 
@@ -124,12 +125,11 @@ ZMQ sockets present an abstraction of a asynchronous message queue, with the exa
         The default setting of ZMQ_LINGER does not discard unsent messages; this behaviour may cause the application to block when calling zmq_ctx_term(). For details refer to zmq_setsockopt(3) and zmq_ctx_term(3).
 
 ### Sending and receiving messages
- - zmq_msg_send - send a message part on a socket  
- - zmq_msg_recv - receive a message part from a socket 
- - zmq_recv - receive a message part from a socket  
- - zmq_send - send a message part on a socket  
-
- - zmq_send_const - send a constant-memory message part on a socket   
+ - **zmq_msg_send** - send a message part on a socket  
+ - **zmq_msg_recv** - receive a message part from a socket 
+ - **zmq_recv** - receive a message part from a socket  
+ - **zmq_send** - send a message part on a socket  
+ - **zmq_send_const** - send a constant-memory message part on a socket   
  
         The zmq_send_const() function shall queue a message created from the buffer referenced by the buf and len arguments. The message buffer is assumed to be constant-memory and will therefore not be copied or deallocated in any way. 
 
