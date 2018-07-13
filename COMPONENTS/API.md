@@ -134,64 +134,64 @@ ZMQ socket 是 zmq 对抽象的异步消息队列的抽象表示，具体表现�
         The zmq_send_const() function shall queue a message created from the buffer referenced by the buf and len arguments. The message buffer is assumed to be constant-memory and will therefore not be copied or deallocated in any way. 
 
 ### Manipulating socket options
- - zmq_setsockopt - set ZMQ socket options
- - zmq_getsockopt - get ZMQ socket options 
+ - zmq_setsockopt - 设置ZMQ socket
+ - zmq_getsockopt - 获取ZMQ socket设置
 
-         - ZMQ_AFFINITY: Retrieve I/O thread affinity
-         - ZMQ_BACKLOG: Retrieve maximum length of the queue of outstanding connections
-         - ZMQ_CONNECT_TIMEOUT: Retrieve connect() timeout
-         - ZMQ_CURVE_PUBLICKEY: Retrieve current CURVE public key
-         - ZMQ_CURVE_SECRETKEY: Retrieve current CURVE secret key
-         - ZMQ_CURVE_SERVERKEY: Retrieve current CURVE server key
-         - ZMQ_EVENTS: Retrieve socket event state
+         - ZMQ_AFFINITY: 异步I/O thread数目
+         - ZMQ_BACKLOG: 最大的外部链接队列数目
+         - ZMQ_CONNECT_TIMEOUT: 连接超时
+         - ZMQ_CURVE_PUBLICKEY: 当前 CURVE public key
+         - ZMQ_CURVE_SECRETKEY: 当前 CURVE secret key
+         - ZMQ_CURVE_SERVERKEY: 当前 CURVE server key
+         - ZMQ_EVENTS: socket事件状态
                  - ZMQ_POLLIN
                  - ZMQ_POLLOUT
-         - ZMQ_FD: Retrieve file descriptor associated with the socket
-         - ZMQ_GSSAPI_PLAINTEXT: Retrieve GSSAPI plaintext or encrypted status
-         - ZMQ_GSSAPI_PRINCIPAL: Retrieve the name of the GSSAPI principal
-         - ZMQ_GSSAPI_SERVER: Retrieve current GSSAPI server role
-         - ZMQ_GSSAPI_SERVICE_PRINCIPAL: Retrieve the name of the GSSAPI service principal
-         - ZMQ_HANDSHAKE_IVL: Retrieve maximum handshake interval
-         - ZMQ_IDENTITY: Retrieve socket identity
-         - ZMQ_IMMEDIATE: Retrieve attach-on-connect value
-         - ZMQ_INVERT_MATCHING: Retrieve inverted filtering status
-         - ZMQ_IPV4ONLY: Retrieve IPv4-only socket override status
-         - ZMQ_IPV6: Retrieve IPv6 socket status
-         - ZMQ_LAST_ENDPOINT: Retrieve the last endpoint set
-         - ZMQ_LINGER: Retrieve linger period for socket shutdown
+         - ZMQ_FD: socket 关联的FD(file descriptor)
+         - ZMQ_GSSAPI_PLAINTEXT: GSSAPI明文或加密的状态
+         - ZMQ_GSSAPI_PRINCIPAL: GSSAPI principal名称
+         - ZMQ_GSSAPI_SERVER: current GSSAPI server role
+         - ZMQ_GSSAPI_SERVICE_PRINCIPAL: the name of the GSSAPI service principal
+         - ZMQ_HANDSHAKE_IVL: maximum handshake interval
+         - ZMQ_IDENTITY: socket身份字符串
+         - ZMQ_IMMEDIATE: attach-on-connect value
+         - ZMQ_INVERT_MATCHING: inverted filtering status
+         - ZMQ_IPV4ONLY: IPv4-only socket override status
+         - ZMQ_IPV6: IPv6 socket status
+         - ZMQ_LAST_ENDPOINT: the last endpoint set
+         - ZMQ_LINGER: linger period for socket shutdown
          - ZMQ_MAXMSGSIZE: Maximum acceptable inbound message size
-         - ZMQ_MECHANISM: Retrieve current security mechanism
+         - ZMQ_MECHANISM: current security mechanism
          - ZMQ_MULTICAST_HOPS: Maximum network hops for multicast packets
          - ZMQ_MULTICAST_MAXTPDU: Maximum transport data unit size for multicast packets
-         - ZMQ_PLAIN_PASSWORD: Retrieve current password
-         - ZMQ_PLAIN_SERVER: Retrieve current PLAIN server role
-         - ZMQ_PLAIN_USERNAME: Retrieve current PLAIN username
-         - ZMQ_USE_FD: Retrieve the pre-allocated socket file descriptor
-         - ZMQ_RATE: Retrieve multicast data rate
-         - ZMQ_RCVBUF: Retrieve kernel receive buffer size
-         - ZMQ_RCVHWM: Retrieve high water mark for inbound messages
+         - ZMQ_PLAIN_PASSWORD: PLAIN 密码
+         - ZMQ_PLAIN_SERVER: PLAIN 服务器
+         - ZMQ_PLAIN_USERNAME: PLAIN 用户名
+         - ZMQ_USE_FD: the pre-allocated socket file descriptor
+         - ZMQ_RATE: 组播数据速率
+         - ZMQ_RCVBUF: kernel receive buffer size
+         - ZMQ_RCVHWM: high water mark for inbound messages
          - ZMQ_RCVMORE: More message data parts to follow
-         - ZMQ_RCVTIMEO: Maximum time before a socket operation returns with EAGAIN
-         - ZMQ_RECONNECT_IVL: Retrieve reconnection interval
-         - ZMQ_RECONNECT_IVL_MAX: Retrieve maximum reconnection interval
+         - ZMQ_RCVTIMEO: socket读取超时设置(超时发出EAGAIN事件)
+         - ZMQ_RECONNECT_IVL: 重连间隔
+         - ZMQ_RECONNECT_IVL_MAX: maximum reconnection interval
          - ZMQ_RECOVERY_IVL: Get multicast recovery interval
-         - ZMQ_SNDBUF: Retrieve kernel transmit buffer size
-         - ZMQ_SNDHWM: Retrieves high water mark for outbound messages
-         - ZMQ_SNDTIMEO: Maximum time before a socket operation returns with EAGAIN
-         - ZMQ_SOCKS_PROXY: Retrieve SOCKS5 proxy address
+         - ZMQ_SNDBUF: kernel transmit buffer size
+         - ZMQ_SNDHWM:  high water mark for outbound messages
+         - ZMQ_SNDTIMEO: socket发送超时设置(超时发出EAGAIN事件)
+         - ZMQ_SOCKS_PROXY: SOCKS5 proxy address
          - ZMQ_TCP_KEEPALIVE: Override SO_KEEPALIVE socket option
          - ZMQ_TCP_KEEPALIVE_CNT: Override TCP_KEEPCNT socket option
          - ZMQ_TCP_KEEPALIVE_IDLE: Override TCP_KEEPIDLE (or TCP_KEEPALIVE on some OS)
          - ZMQ_TCP_KEEPALIVE_INTVL: Override TCP_KEEPINTVL socket option
-         - ZMQ_TCP_MAXRT: Retrieve Max TCP Retransmit Timeout
-         - ZMQ_THREAD_SAFE: Retrieve socket thread safety
-         - ZMQ_TOS: Retrieve the Type-of-Service socket override status
-         - ZMQ_TYPE: Retrieve socket type
-         - ZMQ_ZAP_DOMAIN: Retrieve RFC 27 authentication domain
-         - ZMQ_VMCI_BUFFER_SIZE: Retrieve buffer size of the VMCI socket
-         - ZMQ_VMCI_BUFFER_MIN_SIZE: Retrieve min buffer size of the VMCI socket
-         - ZMQ_VMCI_BUFFER_MAX_SIZE: Retrieve max buffer size of the VMCI socket
-         - ZMQ_VMCI_CONNECT_TIMEOUT: Retrieve connection timeout of the VMCI socket
+         - ZMQ_TCP_MAXRT: Max TCP Retransmit Timeout
+         - ZMQ_THREAD_SAFE: socket thread safety
+         - ZMQ_TOS: the Type-of-Service socket override status
+         - ZMQ_TYPE: socket type
+         - ZMQ_ZAP_DOMAIN: RFC 27 authentication domain
+         - ZMQ_VMCI_BUFFER_SIZE: buffer size of the VMCI socket
+         - ZMQ_VMCI_BUFFER_MIN_SIZE: min buffer size of the VMCI socket
+         - ZMQ_VMCI_BUFFER_MAX_SIZE: max buffer size of the VMCI socket
+         - ZMQ_VMCI_CONNECT_TIMEOUT: connection timeout of the VMCI socket
 
 ### Monitoring socket events
 

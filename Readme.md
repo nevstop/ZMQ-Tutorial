@@ -16,27 +16,11 @@
  - 应用程序无法直接和Socket 连接直接打交道，因为它们是被封装在ZMQ底层的。
  - ZMQ是iMatix公司的产品，以LGPL开源协议发布。
 
-TCP套接字和ZMQ套接字之间的区别：
-
- - ZMQ 不仅支持 TCP 协议，也支持多种其他协议：inproc（进程内）、ipc（进程间）、tcp、pgm（广播）、epgm等。
-
- - ZMQ Socket 当客户端使用zmq_connect()时连接就已经建立了，并不要求该端点已有某个服务使用zmq_bind()进行了绑定。
-
- - ZMQ没有提供类似zmq_accept()的函数，因为当套接字绑定至端点时它就自动开始接受连接了.
-
- - ZMQ套接字传输的是消息（一段指定长度的二进制数据块），而不是字节（TCP）或帧（UDP）。
- 
- - 连接是异步的，并由一组消息队列做缓冲；  
- ZMQ套接字在后台进行I/O操作，无论是接收还是发送消息，它都会先传送到一个本地的缓冲队列，这个内存队列的大小是可以配置的。
-
- - ZMQ套接字可以和多个套接字进行连接。  
- TCP协议只能进行点对点的连接，而ZMQ则可以进行一对一、一对多（类似于无线广播）、多对多（类似于邮局）、多对一（类似于信箱）。
-
 ## ZMQ 知识
  
- - [Socket](./COMPONENTS/Socket.md)
- - [Message](./COMPONENTS/Message.md)
- - [Pattern](./COMPONENTS/Patterns.md)
+ - [Message](./COMPONENTS/Message.md): ZMQ 通讯的传输数据
+ - [Socket](./COMPONENTS/Socket.md) : ZMQ 通讯单元，可以选择不同的协议实现。
+ - [Pattern](./COMPONENTS/Patterns.md) : ZMQ Sockets 间的通讯模型
  - [API](./COMPONENTS/API.md) : 以 C API 为例，说明 ZMQ 的 API 分类和功能。
 
 ## ZMQ v2.x to ZMQ v3.x
